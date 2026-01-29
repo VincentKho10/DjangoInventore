@@ -1,24 +1,23 @@
+import json
 from bson import ObjectId
+from inventore.services import serviceCreateMetricUnit
 from inventore.models import MetricUnit, Unit
 from rest_framework import serializers
 
-class ObjectIdField(serializers.Field):
-    def to_representation(self, value):
-        return str(value)
-    
-    def to_internal_value(self, value):
-        return ObjectId(value)
 
 class MetricUnitSerializer(serializers.ModelSerializer):
-    id = ObjectIdField()
-
+    
     class Meta:
         model = MetricUnit
-        fields = ['id', 'metric_unit_name']
+        fields = ['id','metric_unit_name']
+        # fields = ['metric_unit_name']
+        read_only_fields = ["id"]
+
+    # def create(self, validate_data):
+    #     # metric_unit = serviceCreateMetricUnit(validate_data)
+    #     return metric_unit
 
 class UnitSerializer(serializers.ModelSerializer):
-    id = ObjectIdField()
-
     class Meta:
         model = Unit
         fields = ['id','unit_name']

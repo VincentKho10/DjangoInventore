@@ -27,8 +27,8 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Tax)
 class TaxAdmin(admin.ModelAdmin):
-    list_display = ('tax_name',)
-    search_fields = ('tax_name',)
+    list_display = ('tax_value',)
+    search_fields = ('tax_value',)
 
 @admin.register(ItemMutationHistory)
 class ItemMutationHistoryAdmin(admin.ModelAdmin):

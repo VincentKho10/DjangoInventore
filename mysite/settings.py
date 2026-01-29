@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yb$&17o9gsvtag_0%p5u8$if3j=o+@vr02ob0q48r1$t*sde6p'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,9 +36,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'inventore.apps.InventoreConfig',
-    'inventore.apps.MongoAdminConfig',
-    'inventore.apps.MongoAuthConfig',
-    'inventore.apps.MongoContentTypesConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -75,22 +79,15 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
-    # "postgres": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    # },
     "default": {
-        "NAME": "inventor_e",
-        "ENGINE": "django_mongodb_backend",
-        "HOST": "mongodb://localhost:27017"
-    }
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRE_DBNAME"),
+        "USER": os.getenv("POSTGRE_USER"),
+        "PASSWORD": os.getenv("POSTGRE_CREDS"),
+        "HOST": os.getenv("POSTGRE_HOST"),
+        "PORT": os.getenv("POSTGRE_PORT"),
+    },
 }
-
-# DATABASE_ROUTERS = ['mysite.database_routers.InventorERouter', 'mysite.database_routers.MyAppRouter']
-DATABASE_ROUTERS = ['django_mongodb_backend.routers.MongoRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -127,11 +124,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
-
-MIGRATION_MODULES = {
-    'admin': 'inventore.mongo_migrations.admin',
-    'auth': 'inventore.mongo_migrations.auth',
-    'contenttypes': 'inventore.mongo_migrations.contenttypes',
-}
