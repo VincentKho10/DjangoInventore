@@ -10,12 +10,11 @@ class MetricUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = MetricUnit
         fields = ['id','metric_unit_name']
-        # fields = ['metric_unit_name']
         read_only_fields = ["id"]
 
-    # def create(self, validate_data):
-    #     # metric_unit = serviceCreateMetricUnit(validate_data)
-    #     return metric_unit
+    def create(self, validate_data):
+        metric_unit = serviceCreateMetricUnit(validate_data)
+        return metric_unit
 
 class UnitSerializer(serializers.ModelSerializer):
     class Meta:

@@ -12,7 +12,7 @@ from django_mongodb_backend.fields import EmbeddedModelField
 
 class MetricUnit(models.Model):
 
-    metric_unit_name = models.CharField(max_length=5)
+    metric_unit_name = models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 
