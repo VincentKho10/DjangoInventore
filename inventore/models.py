@@ -25,6 +25,7 @@ class MetricUnit(models.Model):
     
 class Unit(models.Model):
     unit_name = models.CharField(max_length=5)
+    unit = models.ForeignKey(MetricUnit, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 

@@ -1,9 +1,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+<style>
+    .collapse{
+        width: 25%;
+        height: 100%;
+    }
+</style>
 
-<div class="container-fluid d-flex flex-row p-0">
-    <div class="collapse collapse-horizontal vh-100 bg-dark" id="navbarToggleExternalContent" data-bs-theme="dark">
+<div class="vw-100 d-flex flex-row p-0">
+    <div class="collapse collapse-horizontal vh-100 bg-dark show" id="navbarToggleExternalContent" data-bs-theme="dark">
         <div class="bg-dark p-4">
             <h5 class="text-body-emphasis h4">Collapsed content</h5>
             <span class="text-body-secondary">Toggleable via the navbar brand.</span>
@@ -13,7 +20,7 @@
         <div>
             {% include "inventore/utils/navbar.html" %}
         </div>
-        <div class="flex-grow-1 p-2">
+        <div class="flex-grow-1 p-3">
             {% block content %}
             {% endblock %}
         </div>

@@ -1,0 +1,40 @@
+{% extends "inventore/utils/base.html" %}
+
+{% block content %}
+<style>
+    input.form-control{
+        height: fit-content;
+    }
+</style>
+
+
+{% if object %}
+<div class="d-flex flex-column h-100">
+    <h1 class="mb-5">{{object}}</h1>
+    <form class="d-flex flex-column flex-grow-1" method='POST'>
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group d-flex flex-row w-50 justify-content-between flex-grow-1">
+                <label for="{{field.label}}">{{field.label}}</label>
+                <input id="{{field.label}}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" class="form-control w-50" type="{{field.widget_type}}" id="{{field.label}}" aria-label="default input example">
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary m-3 align-self-end submit-btn">Update</button>
+    </form>
+</div>
+{% else %}
+<div class="d-flex flex-column h-100">
+    <h1 class="mb-5">Create Metric Unit</h1>
+    <form class="d-flex flex-column flex-grow-1" method='POST'>
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group d-flex flex-row w-50 justify-content-between flex-grow-1">
+                <label for="{{field.label}}">{{field.label}}</label>
+                <input id="{{field.label}}" name="{{ field.html_name }}" value="" class="form-control w-50" type="{{field.widget_type}}" id="{{field.label}}" aria-label="default input example">
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary m-3 align-self-end submit-btn">Create</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

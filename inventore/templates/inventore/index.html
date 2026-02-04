@@ -2,25 +2,52 @@
 
 {%block content%}
 
+<style>
+    .bi {
+        font-size: 1.5rem;
+    }
+
+    .bi.delete{
+        color: pink;
+    }
+
+    .bi.delete:hover{
+        color: red;
+    }
+
+    .bi.update{
+        color: #C1E1C1;
+    }
+
+    .bi.update:hover{
+        color: green;
+    }
+</style>
+
+<div class="container-fluid p-2">
+    <a class="btn btn-success" href={% url "inventore:metric-unit-create" %}>Add</a>
+</div>
+
 <table class="table">
 <thead>
     <tr>
         <th scope="col">ID</th>
         <th scope="col">Metric Unit Name</th>
+        <th scope="col">Action</th>
     </tr>
 </thead>
 <tbody>
-    <div class="container-fluid p-2 bg-danger">
-        <button type="button" class="btn btn-success">Add</button>
-    </div>
     {%for metric_unit in metric_units %}
     <tr>
         <td>
             {{metric_unit.id.value}}
         </td>
         <td>
-            
             {{metric_unit.metric_unit_name.value}}
+        </td>
+        <td>
+            <a class='btn' href={% url "inventore:metric-unit-delete" metric_unit.id.value %}><i class="bi bi-trash-fill delete"></i></a>
+            <a class='btn' href={% url "inventore:metric-unit-update" metric_unit.id.value %}><i class="bi bi-pencil-square update"></i></a>
         </td>
     </tr>
     {%endfor%}

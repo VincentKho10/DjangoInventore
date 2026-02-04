@@ -1,0 +1,12 @@
+{% extends "inventore/utils/base.html" %}
+
+{%block content%}
+
+<form method='post' class='d-flex flex-column container-sm border w-50 p-5 align-self-center'>
+    {% csrf_token %}
+    <h1>Delete Confirmation</h1>
+    <p>Are you sure want to delete "{{ object }}"?</p>
+    <input class="btn btn-danger align-self-end" type="submit" value="Delete">
+</form>
+
+{%endblock%}
