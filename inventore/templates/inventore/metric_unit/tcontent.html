@@ -1,0 +1,14 @@
+{%for metric_unit in metric_units %}
+    <tr>
+        <td>
+            {{metric_unit.id.value}}
+        </td>
+        <td>
+            {{metric_unit.metric_unit_name.value}}
+        </td>
+        <td>
+            <a class='btn' href={% url delete_path metric_unit.id.value %}><i class="bi bi-trash-fill delete"></i></a>
+            <a class='btn' href={% url update_path metric_unit.id.value %}><i class="bi bi-pencil-square update"></i></a>
+        </td>
+    </tr>
+{%endfor%}

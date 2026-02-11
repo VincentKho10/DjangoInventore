@@ -4,10 +4,20 @@ from django.views import generic
 from inventore.models import MetricUnit
 from inventore.serializers import MetricUnitSerializer
 
-
 class MetricUnitView(generic.ListView):
     template_name = "inventore/index.html"
     context_object_name = "metric_units"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["create_path"] = "inventore:metric-unit-create"
+        context["update_path"] = "inventore:metric-unit-update"
+        context["delete_path"] = "inventore:metric-unit-delete"
+
+        context['t_content'] = "inventore/metric_unit/tcontent.html"
+        
+        return context
 
     def get_queryset(self):
         return [MetricUnitSerializer(mu) for mu in MetricUnit.objects.all()]

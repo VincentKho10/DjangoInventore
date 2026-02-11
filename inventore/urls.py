@@ -16,9 +16,11 @@ metric_unit_path = [
     path('metric_unit/create', views.MetricUnitCreateView.as_view(), name="metric-unit-create"),
 ]
 
-# unit_path = [
-#     path('unit', views.UnitView.as_view(), name='unit'),
-#     path('unit/<init:pk>/edit', views.UnitView.as_view(), name='unit-edit')
-# ]
+unit_path = [
+    path('unit', views.UnitView.as_view(), name='unit'),
+    path('unit/<int:pk>/edit', views.UnitDetailView.as_view(), name='unit-update'),
+    path('unit/<int:pk>/delete', views.UnitDeleteView.as_view(), name='unit-delete'),
+    path('unit/create', views.UnitCreateView.as_view(), name='unit-create'),
+]
 
-urlpatterns = api+metric_unit_path
+urlpatterns = api+metric_unit_path+unit_path

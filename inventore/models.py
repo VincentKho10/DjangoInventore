@@ -11,7 +11,6 @@ from django_mongodb_backend.fields import EmbeddedModelField
 # MetricUnit, Unit, Tax, Item, ItemEachUnit, ItemMutationHistory
 
 class MetricUnit(models.Model):
-
     metric_unit_name = models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
@@ -24,8 +23,9 @@ class MetricUnit(models.Model):
         return self.metric_unit_name
     
 class Unit(models.Model):
-    unit_name = models.CharField(max_length=5)
-    unit = models.ForeignKey(MetricUnit, on_delete=models.CASCADE, default=1)
+    unit_name = models.CharField(max_length=100)
+    metric_unit = models.ForeignKey(MetricUnit, on_delete=models.CASCADE, default=1)
+    ratio = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 
@@ -61,7 +61,6 @@ class Item(models.Model):
     base_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
     tax = models.ForeignKey(Tax, on_delete=models.DO_NOTHING)
     grand_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
-    package_ratio = models.DecimalField(default=1, decimal_places=2, max_digits=20, validators=[MinValueValidator(int(1))])
     package_quantity = models.IntegerField(default=0, editable=False)
     code_id = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now=True)
