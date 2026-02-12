@@ -26,6 +26,7 @@ class Unit(models.Model):
     unit_name = models.CharField(max_length=100)
     metric_unit = models.ForeignKey(MetricUnit, on_delete=models.CASCADE, default=1)
     ratio = models.IntegerField(default=1)
+
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 
@@ -37,9 +38,9 @@ class Unit(models.Model):
         return self.unit_name
     
 class Tax(models.Model):
-    tax_value = models.DecimalField(default=0.11, decimal_places=2, max_digits=3, unique=True, validators=[
-        MinValueValidator(Decimal('0.01')),
-        MaxValueValidator(Decimal('1'))
+    tax_value = models.DecimalField(decimal_places=2, max_digits=5, unique=True, validators=[
+        MinValueValidator(1),
+        MaxValueValidator(100)
     ])
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
@@ -54,15 +55,10 @@ class Tax(models.Model):
 class Item(models.Model):
     item_name = models.CharField(max_length=200)
     item_code = models.CharField(max_length=200)
-    metric_unit = models.ForeignKey(MetricUnit,on_delete=models.DO_NOTHING)
-    unit = models.ForeignKey(Unit, on_delete=models.DO_NOTHING, null=True, blank=True)
     quantity = models.IntegerField()
-    unit_price = models.DecimalField(decimal_places=2, max_digits=20) 
-    base_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
-    tax = models.ForeignKey(Tax, on_delete=models.DO_NOTHING)
     grand_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
-    package_quantity = models.IntegerField(default=0, editable=False)
-    code_id = models.CharField(max_length=200)
+    metric_unit = models.ForeignKey(MetricUnit,on_delete=models.DO_NOTHING)
+    
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 
@@ -74,13 +70,17 @@ class Item(models.Model):
         return self.item_name
     
 class ItemEachUnit(models.Model):
-    item_name = models.CharField(max_length=200)
-    item_code = models.CharField(max_length=200)
-    metric_unit = models.ForeignKey(MetricUnit,on_delete=models.DO_NOTHING)
-    unit = models.ForeignKey(Unit, on_delete=models.DO_NOTHING, null=True, blank=True)
     quantity = models.IntegerField()
+    unit = models.ForeignKey(Unit, on_delete=models.DO_NOTHING, null=True, blank=True)
+    metric_unit = models.ForeignKey(MetricUnit, on_delete=models.DO_NOTHING, null=False, blank=False)
+    unit_price = models.DecimalField(default=1, decimal_places=2, max_digits=20) 
+    base_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
+    tax = models.ForeignKey(Tax, on_delete=models.DO_NOTHING, default=1)
+    total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
+    
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    id_code = models.URLField(editable=False)
+    id_code = models.CharField(editable=False)
+
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 
@@ -91,8 +91,9 @@ class ItemEachUnit(models.Model):
 class ItemMutationHistory(models.Model):
     title = models.CharField(max_length=50, editable=False)
     description = models.TextField(max_length=200, editable=False)
-    item = models.ForeignKey(Item, on_delete=models.DO_NOTHING)
-    quantity = models.DecimalField(decimal_places=2, max_digits=20)
+    item_e_unit = models.ForeignKey(ItemEachUnit, default=1, on_delete=models.DO_NOTHING, null=False, blank=False)
+    mutation_quantity = models.DecimalField(default=0, decimal_places=2, max_digits=20)
+
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 

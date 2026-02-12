@@ -15,12 +15,12 @@ class MetricUnitView(generic.ListView):
         context["update_path"] = "inventore:metric-unit-update"
         context["delete_path"] = "inventore:metric-unit-delete"
 
-        context['t_content'] = "inventore/metric_unit/tcontent.html"
+        context['t_content'] = "inventore/model_content/tcontent_metric_unit.html"
         
         return context
 
     def get_queryset(self):
-        return [MetricUnitSerializer(mu) for mu in MetricUnit.objects.all()]
+        return MetricUnit.objects.all()
     
 class MetricUnitCreateView(generic.CreateView):
     model = MetricUnit

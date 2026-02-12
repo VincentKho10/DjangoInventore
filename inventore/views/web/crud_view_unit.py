@@ -15,12 +15,12 @@ class UnitView(generic.ListView):
         context["update_path"] = "inventore:unit-update"
         context["delete_path"] = "inventore:unit-delete"
 
-        context['t_content'] = "inventore/unit/tcontent.html"
+        context['t_content'] = "inventore/model_content/tcontent_unit.html"
 
         return context
 
     def get_queryset(self):
-        return [UnitSerializer(u) for u in Unit.objects.all()]
+        return Unit.objects.all()
 
 class UnitCreateView(generic.CreateView):
     model = Unit

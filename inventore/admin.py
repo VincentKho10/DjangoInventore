@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MetricUnit, Item, Tax, ItemMutationHistory, Unit
+from .models import ItemEachUnit, MetricUnit, Item, Tax, ItemMutationHistory, Unit
 # Register your models here.
 
 
@@ -14,23 +14,23 @@ class UnitAdmin(admin.ModelAdmin):
     list_display = ('unit_name',)
     search_fields = ('unit_name',)
 
-@admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ('item_code', 'item_name', 'metric_unit', 'quantity', 'unit_price', 'tax', 'grand_total', 'package_desc')
-    search_fields = ('item_name',)
-
-    @admin.display(description="Packaging Description")
-    def package_desc(self, obj):
-        if(obj.unit):
-            return "{} {} @{} {}".format(obj.package_quantity, obj.unit, obj.package_ratio, obj.metric_unit)
-        return "{} {}".format(obj.package_quantity, obj.metric_unit)
-
 @admin.register(Tax)
 class TaxAdmin(admin.ModelAdmin):
     list_display = ('tax_value',)
     search_fields = ('tax_value',)
 
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('item_code', 'item_name', 'metric_unit', 'quantity', 'grand_total')
+    search_fields = ('item_name',)
+    
+@admin.register(ItemEachUnit)
+class ItemEachUnitAdmin(admin.ModelAdmin):
+    list_display = ('quantity', 'unit', 'unit_price', 'tax', 'base_total', 'total', 'item', 'id_code')
+    search_fields = ('item_name',)
+
+
 @admin.register(ItemMutationHistory)
 class ItemMutationHistoryAdmin(admin.ModelAdmin):
-    list_display = ('title','description')
+    list_display = ('title','description', 'item_e_unit', 'mutation_quantity')
     search_fields = ('title',)

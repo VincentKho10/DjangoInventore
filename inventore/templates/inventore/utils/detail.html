@@ -8,48 +8,32 @@
 </style>
 
 
-{% if object %}
 <div class="d-flex flex-column h-100">
-    <h1 class="mb-5">{{object}}</h1>
     <form class="d-flex flex-column flex-grow-1" method='POST'>
-        {% csrf_token %}
+    <h1 class="mb-5">{%firstof object 'Create'%}</h1>
+    {% csrf_token %}
+    <div class="flex-grow-1 ps-5">
         {% for field in form %}
-            <div class="form-group d-flex flex-row w-50 justify-content-between flex-grow-1">
-                <label for="{{field.label}}">{{field.label}}</label>
-                <input id="{{field.label}}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" class="form-control w-50" type="{{field.widget_type}}" id="{{field.label}}" aria-label="default input example">
+            <div class="field-wrapper mb-2 form-group d-flex flex-row w-75 justify-content-between flex-grow-1">
+                <label for="{{field.label}}" class="w-25">{{field.label}}</label>
+                {% if field.widget_type == "number" %}
+                <input id="{{field.label}}" name="{{ field.html_name }}" value="{{field.value|default_if_none:'' }}" class="form-control w-25" type="{{field.widget_type}}" id="{{field.label}}" aria-label="default input example">
+                <div class="w-50"></div>
+                {% elif field.widget_type == "select" %}
+                <select name={{field.html_name}} class="form-select form-control w-25" aria-label="Default select example">
+                    {% for value in field %}
+                        {{value}}
+                    {% endfor %}
+                </select>
+                <div class="w-50"></div>
+                {% else %}
+                <input id="{{field.label}}" name="{{ field.html_name }}" value="{{field.value|default_if_none:''}}" class="form-control w-75" type="{{field.widget_type}}" id="{{field.label}}" aria-label="default input example">
+                {% endif %}
             </div>
+            {{field.errors}}
         {% endfor %}
-        <button type="submit" class="btn btn-primary m-3 align-self-end submit-btn">Update</button>
+    </div>
+    <button type="submit" class="btn btn-primary m-3 align-self-end submit-btn">{{object|yesno:'Update,Create'}}</button>
     </form>
 </div>
-{% else %}
-<div class="d-flex flex-column h-100">
-    <h1 class="mb-5">Create Metric Unit</h1>
-    <form class="d-flex flex-column flex-grow-1" method='POST'>
-        {% csrf_token %}
-        <div class="flex-grow-1 ps-5">
-            {% for field in form %}
-                <div class="mb-2 form-group d-flex flex-row w-75 justify-content-between flex-grow-1">
-                    <label for="{{field.label}}" class="w-25">{{field.label}}</label>
-                    {% if field.widget_type == "number" %}
-                    <input id="{{field.label}}" name="{{ field.html_name }}" value="" class="form-control w-25" type="{{field.widget_type}}" id="{{field.label}}" aria-label="default input example">
-                    <div class="w-50"></div>
-                    {% elif field.widget_type == "select" %}
-                    <select class="form-select form-control w-25" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        {% for value in field %}
-                            {{value}}
-                        {% endfor %}
-                    </select>
-                    <div class="w-50"></div>
-                    {% else %}
-                    <input id="{{field.label}}" name="{{ field.html_name }}" value="" class="form-control w-75" type="{{field.widget_type}}" id="{{field.label}}" aria-label="default input example">
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
-        <button type="submit" class="btn btn-primary m-3 align-self-end submit-btn">Create</button>
-    </form>
-</div>
-{% endif %}
 {% endblock %}

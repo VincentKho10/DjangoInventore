@@ -23,4 +23,18 @@ unit_path = [
     path('unit/create', views.UnitCreateView.as_view(), name='unit-create'),
 ]
 
-urlpatterns = api+metric_unit_path+unit_path
+tax_path = [
+    path('tax', views.TaxView.as_view(), name='tax'),
+    path('tax/<int:pk>/edit', views.TaxDetailView.as_view(), name='tax-update'),
+    path('tax/<int:pk>/delete', views.TaxDeleteView.as_view(), name='tax-delete'),
+    path('tax/create', views.TaxCreateView.as_view(), name='tax-create'),
+]
+
+item_path = [
+    path('item', views.ItemView.as_view(), name='item'),
+    path('item/<int:pk>/edit', views.ItemDetailView.as_view(), name='item-update'),
+    path('item/<int:pk>/delete', views.ItemDeleteView.as_view(), name='item-delete'),
+    path('item/create', views.ItemCreateView.as_view(), name='item-create'),
+]
+
+urlpatterns = api+metric_unit_path+unit_path+tax_path+item_path
