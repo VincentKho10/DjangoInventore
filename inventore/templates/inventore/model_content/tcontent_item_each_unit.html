@@ -1,0 +1,52 @@
+
+<thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">item</th>
+        <th scope="col">quantity</th>
+        <th scope="col">unit</th>
+        <th scope="col">Metric Unit</th>
+        <th scope="col">unit_price</th>
+        <th scope="col">tax</th>
+        <th scope="col">base_total</th>
+        <th scope="col">total</th>
+        <th scope="col">Action</th>
+    </tr>
+</thead>
+<tbody>
+{%for item_each_unit in item_each_units %}
+    <tr>
+        <td>
+            {{item_each_unit.id}}
+        </td>
+        <td>
+            {{item_each_unit.item}}
+        </td>
+        <td>
+            {{item_each_unit.quantity}}
+        </td>
+        <td>
+            {{item_each_unit.unit}}
+        </td>
+        <td>
+            {{item_each_unit.metric_unit.metric_unit_name}}
+        </td>
+        <td>
+            {{item_each_unit.unit_price}}
+        </td>
+        <td>
+            {{item_each_unit.tax}}
+        </td>
+        <td>
+            {{item_each_unit.base_total}}
+        </td>
+        <td>
+            {{item_each_unit.total}}
+        </td>
+        <td>
+            <a class='btn' href={% url delete_path item_each_unit.id %}><i class="bi bi-trash-fill delete"></i></a>
+            <a class='btn' href={% url update_path item_each_unit.id %}><i class="bi bi-pencil-square update"></i></a>
+        </td>
+    </tr>
+{%endfor%}
+</tbody>

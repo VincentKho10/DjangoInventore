@@ -26,9 +26,9 @@ class ItemAdmin(admin.ModelAdmin):
     
 @admin.register(ItemEachUnit)
 class ItemEachUnitAdmin(admin.ModelAdmin):
-    list_display = ('quantity', 'unit', 'unit_price', 'tax', 'base_total', 'total', 'item', 'id_code')
+    list_display = ('quantity', 'unit', 'metric_unit', 'unit_price', 'base_total', 'tax', 'item', 'id_code')
     search_fields = ('item_name',)
-
+    
 
 @admin.register(ItemMutationHistory)
 class ItemMutationHistoryAdmin(admin.ModelAdmin):

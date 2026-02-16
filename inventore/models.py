@@ -12,6 +12,7 @@ from django_mongodb_backend.fields import EmbeddedModelField
 
 class MetricUnit(models.Model):
     metric_unit_name = models.CharField(max_length=10)
+    
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)
 
@@ -23,7 +24,8 @@ class MetricUnit(models.Model):
         return self.metric_unit_name
     
 class Unit(models.Model):
-    unit_name = models.CharField(max_length=100)
+    unit_name = models.CharField(max_length=100, editable=False)
+
     metric_unit = models.ForeignKey(MetricUnit, on_delete=models.CASCADE, default=1)
     ratio = models.IntegerField(default=1)
 
@@ -55,7 +57,7 @@ class Tax(models.Model):
 class Item(models.Model):
     item_name = models.CharField(max_length=200)
     item_code = models.CharField(max_length=200)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=0, editable=False)
     grand_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
     metric_unit = models.ForeignKey(MetricUnit,on_delete=models.DO_NOTHING)
     
@@ -72,14 +74,14 @@ class Item(models.Model):
 class ItemEachUnit(models.Model):
     quantity = models.IntegerField()
     unit = models.ForeignKey(Unit, on_delete=models.DO_NOTHING, null=True, blank=True)
-    metric_unit = models.ForeignKey(MetricUnit, on_delete=models.DO_NOTHING, null=False, blank=False)
+    metric_unit = models.ForeignKey(MetricUnit, on_delete=models.DO_NOTHING, null=True, blank= True, editable=False)
     unit_price = models.DecimalField(default=1, decimal_places=2, max_digits=20) 
-    base_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
     tax = models.ForeignKey(Tax, on_delete=models.DO_NOTHING, default=1)
-    total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
+    
+    base_total = models.DecimalField(default=0, editable=False, decimal_places=2, max_digits=20)
+    id_code = models.CharField(editable=False)
     
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    id_code = models.CharField(editable=False)
 
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(editable=False)

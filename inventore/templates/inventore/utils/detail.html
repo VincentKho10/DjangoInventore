@@ -33,6 +33,7 @@
             {{field.errors}}
         {% endfor %}
     </div>
+    {% if item_e_unit %} {% include item_e_unit %} {% endif %}
     <button type="submit" class="btn btn-primary m-3 align-self-end submit-btn">{{object|yesno:'Update,Create'}}</button>
     </form>
 </div>

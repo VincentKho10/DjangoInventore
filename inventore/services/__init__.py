@@ -1,3 +1,4 @@
 from inventore.services.crud_services.service_crud_tax import serviceCreateTax, serviceShowAllTax, serviceGetOneTax
 from inventore.services.crud_services.service_crud_metric_unit import serviceShowAllMetricUnit, serviceCreateMetricUnit, serviceUpdateMetricUnit
 from inventore.services.crud_services.service_crud_unit import serviceCreateUnit, serviceShowAllUnit, serviceUpdateUnit
+from inventore.services.crud_services.service_crud_item_each_unit import serviceCreateItemEachUnit

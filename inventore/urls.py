@@ -37,4 +37,11 @@ item_path = [
     path('item/create', views.ItemCreateView.as_view(), name='item-create'),
 ]
 
-urlpatterns = api+metric_unit_path+unit_path+tax_path+item_path
+item_each_unit_path = [
+    path('item_each_unit', views.ItemEachUnitView.as_view(), name='item-each-unit'),
+    path('item_each_unit/<int:pk>/edit', views.ItemEachUnitDetailView.as_view(), name='item-each-unit-update'),
+    path('item_each_unit/<int:pk>/delete', views.ItemEachUnitDeleteView.as_view(), name='item-each-unit-delete'),
+    path('item_each_unit/create', views.ItemEachUnitCreateView.as_view(), name='item-each-unit-create'),
+]
+
+urlpatterns = api+metric_unit_path+unit_path+tax_path+item_path+item_each_unit_path

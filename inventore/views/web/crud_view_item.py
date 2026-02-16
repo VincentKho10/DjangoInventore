@@ -24,15 +24,27 @@ class ItemView(generic.ListView):
 
 class ItemCreateView(generic.CreateView):
     model = Item
-    fields = ['item_code', 'item_name', 'metric_unit', 'quantity', 'grand_total']
+    fields = ['item_code', 'item_name', 'metric_unit']
     template_name = "inventore/utils/detail.html"
     success_url = reverse_lazy('inventore:item')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['item_e_unit'] = 'inventore/custom_form/divide_item.html'
+        return context
 
 class ItemDetailView(generic.UpdateView):
     model = Item
-    fields = ['item_code', 'item_name', 'metric_unit', 'quantity', 'grand_total']
+    fields = ['item_code', 'item_name', 'metric_unit']
     template_name = "inventore/utils/detail.html"
     success_url = reverse_lazy('inventore:item')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['item_e_unit'] = 'inventore/custom_form/divide_item.html'
+        return context
 
 class ItemDeleteView(generic.DeleteView):
     model = Item
