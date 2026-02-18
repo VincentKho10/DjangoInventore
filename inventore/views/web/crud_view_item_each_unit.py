@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -30,10 +31,9 @@ class ItemEachUnitCreateView(generic.CreateView):
     success_url = reverse_lazy('inventore:item-each-unit')
 
     def form_valid(self, form):
-        post = form.data.tax
-        print(post)
-        # serviceCreateItemEachUnit(post)
-        return super().form_valid(form)
+        post = form.save(commit=False)
+        serviceCreateItemEachUnit(post)
+        return redirect('inventore:item-each-unit')
 
 class ItemEachUnitDetailView(generic.UpdateView):
     model = ItemEachUnit
@@ -45,3 +45,8 @@ class ItemEachUnitDeleteView(generic.DeleteView):
     model = ItemEachUnit
     template_name = "inventore/utils/delete.html"
     success_url = reverse_lazy('inventore:item-each-unit')
+
+    def form_valid(self, form):
+        form
+        return super().form_valid(form)
+    
